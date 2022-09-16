@@ -1,0 +1,2 @@
+# CompositeCase
+En el patrón composite … • En el código del patrón composite de compra de productos de tecnología, modifique las clases, atributos y métodos de la implementación, de forma que le permita agregar las 3 nuevas funcionalidades que se le solicitan. • Los cambios deben hacerse en función que la Orden de venta acepte los nuevos campos en la estructuras de composite. • Importante: deje pruebas en el main.
