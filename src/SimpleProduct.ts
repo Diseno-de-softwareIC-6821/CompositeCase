@@ -1,9 +1,11 @@
-import { AbstractProduct, eIva } from "./AbstractProduct";
+import { AbstractProduct} from "./AbstractProduct";
+
+import { Iva } from "./Iva";
 
 export class SimpleProduct extends AbstractProduct{
     protected brand: string;
 
-    constructor(name: string, price: number, brand: string, iva: eIva) {
+    constructor(name: string, price: number, brand: string, iva: number) {
         super(name, price, iva);
         this.brand = brand;
     }
@@ -13,7 +15,7 @@ export class SimpleProduct extends AbstractProduct{
     getPriceWithAmount(): number {
         return this.price * this.amount;
     }
-    getIvaAmount(): eIva{
+    getIvaAmount(): number{
         return this.iva;
     }
 
