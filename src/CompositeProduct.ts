@@ -11,7 +11,7 @@ export class CompositeProduct extends AbstractProduct{
     getPrice(): number {
         let price = 0;
         for (let product of this.products) {
-            price += product.getPrice();
+            price += product.getPrice() * product.getAmount();
         }
         return price;
     }

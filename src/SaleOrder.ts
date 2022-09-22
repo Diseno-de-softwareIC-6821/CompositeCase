@@ -13,13 +13,22 @@ export class SaleOrder{
     getPrice(): number {
         let price = 0;
         for (let product of this.products) {
-            price += product.getPrice();
+            price += product.getPrice()* product.getAmount();
         }
         return price;
     }
 
-    addProduct(product: AbstractProduct): void {
-        this.products.push(product);
+    addProduct(product: AbstractProduct): void { 
+        //busca el producto en el array de productos, si lo encuentra le suma 1 a la cantidad, si no lo encuentra lo agrega al array
+        this.searchProduct(product)?.addAmount() || this.products.push(product);
+    }
+    searchProduct(product: AbstractProduct): AbstractProduct | undefined { //funcion que busca el producto en el array de productos
+        for (let product of this.products) {
+            if(product.getName() == product.getName()){
+                return product;
+            }
+        }
+        return undefined;
     }
 
     printOrder(): void {
