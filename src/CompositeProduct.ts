@@ -1,12 +1,12 @@
-import { AbstractProduct, eIva } from "./AbstractProduct";
+import { AbstractProduct } from "./AbstractProduct";
 
 export class CompositeProduct extends AbstractProduct{
 
     private products: AbstractProduct[] = [];
     
 
-    constructor(name: string) {
-        super(name, 0, eIva.IVA_0);
+    constructor(name: string, iva: number) {
+        super(name, 0, iva);
     }
 
     getPrice(): number {
@@ -16,47 +16,58 @@ export class CompositeProduct extends AbstractProduct{
         }
         return price;
     }
+
     getPriceWithAmount(): number {
         return this.getPrice() * this.amount;
     }
+    
     getIva(): number {
-        let iva = 0;
-        for (let product of this.products){
-            /*console.log(`${product.getPrice()}`)
-            console.log(`${product.getIva() * product.getAmount()}`)
-            console.log(`${product.getAmount()}`)
-            console.log(`${product.getName()}`)*/
-            iva += product.getIva();
-        }
-        return iva;
+        this.setPrice()
+        return this.price * this.iva;
     }
 
-    getIvaAmount(): eIva {
-        let iva: eIva = eIva.IVA_0;
-        for (let product of this.products){
-            iva = product.getIvaEnum();
-        }
-        return iva;
+    getIvaAmount(): number{
+        return this.iva;
     }
 
-    setPrice(price: number): void {
-        // unsupported
+    setPrice(): void {
+        //Unsopported
     }
 
     addProduct(product: AbstractProduct): void {
-        this.searchProduct(product.getName())?.addAmount() || this.products.push(product);
+        
+        this.price += product.getPrice();
+
+        const productName = product.getName();
+        if(this.searchProduct(productName)){
+            this.searchProduct(productName)?.addAmount();
+        }
+        else{
+            this.products.push(product);
+        }
     }
+
+
     searchProduct(name: string): AbstractProduct | undefined {
+        
         return this.products.find(product => product.getName() === name);
     }
 
     removeProduct(product: AbstractProduct): boolean {
-        let index = this.products.indexOf(product);
-        if (index > -1) {
-            this.products.splice(index, 1);
-            return true
+        const prod = this.searchProduct(product.getName())
+        try{
+            if(prod!.getAmount() > 1){
+                prod?.restAmount()
+            }
+            else{
+                const index = this.products.indexOf(prod!);
+                this.products.splice(index, 1);
+            }
+            return true;
         }
-        return false;
+        catch{
+            return false;
+        }
     }
 
 

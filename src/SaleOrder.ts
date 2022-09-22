@@ -1,4 +1,5 @@
-import { AbstractProduct, eIva } from './AbstractProduct';
+import { AbstractProduct} from './AbstractProduct';
+import { Iva } from './Iva';
 
 export class SaleOrder{
     private orderId: number;
@@ -10,6 +11,10 @@ export class SaleOrder{
         this.customer = customer;
     }
 
+    getProduct(): AbstractProduct[] {
+        return this.products;
+    }
+
     getPrice(): number {
         let price = 0;
         for (let product of this.products) {
@@ -19,7 +24,14 @@ export class SaleOrder{
     }
 
     addProduct(product: AbstractProduct): void {
-        this.searchProduct(product.getName())?.addAmount() || this.products.push(product);
+
+        const productName = product.getName();
+        if(this.searchProduct(productName)){
+            this.searchProduct(productName)?.addAmount();
+        }
+        else{
+            this.products.push(product);
+        }
     }
     getIva(): number {
         let iva = 0;
@@ -31,43 +43,37 @@ export class SaleOrder{
         return iva;
     }
     getIvaPrc(product:AbstractProduct): string {
-        //console.log(`${product.getIvaAmount()}`)
-        switch(product.getIvaEnum()) { 
-            case eIva.IVA_0: { 
+
+        switch(product.getIvaAmount()) { 
+            case Iva.IVA_0: { 
                return "0% IVA"
-               break; 
+
             } 
-            case eIva.IVA_2: { 
+            case Iva.IVA_2: { 
                 return "2% IVA"
-               break; 
+
             } 
-              case eIva.IVA_4: { 
+              case Iva.IVA_4: { 
                 return "4% IVA"
-               break; 
+
             } 
-              case eIva.IVA_8: { 
+              case Iva.IVA_8: { 
                 return "8% IVA"
-               break; 
+
             } 
-            case eIva.IVA_13: { 
+            case Iva.IVA_13: {
                 return "13% IVA"
-               break; 
+
             } 
             default: { 
                 return "Iva no especificado"
-                break; 
+
             } 
          }
     }
     
     searchProduct(name: string): AbstractProduct | undefined {
-        for (let product of this.products) {
-            if (product.getName() === name) {
-                return product;
-            }
-        }
-        return undefined;
-        
+        return this.products.find(product => product.getName() === name);
     }
     
 
@@ -75,7 +81,7 @@ export class SaleOrder{
     
     printOrder(): void {
         console.log(`\n--------------------------------------------------------\n`);
-        console.log(`Order #${this.orderId} for ${this.customer}\n Amount |  Products   | unit | Price*amount | IVA`);
+        console.log(`Order #${this.orderId} for ${this.customer}\n Amount |  Products  | Unit Price | Price*amount | IVA`);
         for (let product of this.products) {
             console.log(`${product.getAmount()} \t  ${product.getName()} \t ${product.getPrice()} \t${product.getPriceWithAmount()}  \t ${this.getIvaPrc(product)}`);
         }
