@@ -4,4 +4,5 @@ export const Iva = {
     IVA_4: 0.04,
     IVA_8: 0.08,
     IVA_13: 0.13,
+    IVA_SUM: -1
 };

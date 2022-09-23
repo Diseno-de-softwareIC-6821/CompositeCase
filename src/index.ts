@@ -33,7 +33,7 @@ function main():void{
 
     //Computadora para Gammer que incluye 8gb de ram,disco de 1tb,procesador Intel i7          
     //Gabinete grande, monitor de 30' y un mouse gammer
-    gammerPC = new CompositeProduct("Gammer PC", Iva.IVA_13);   
+    gammerPC = new CompositeProduct("Gammer PC", Iva.IVA_SUM);   
     gammerPC.addProduct(ram8gb);   
     gammerPC.addProduct(disk1tb);   
     gammerPC.addProduct(cpuIntel);   
@@ -45,7 +45,7 @@ function main():void{
     
     //Computadora para Casa que incluye 4gb de ram,disco de 500gb, procesador AMD Phenon         
     //Gabinete chico, monitor de 20' y un mouse simple.           
-    homePC = new CompositeProduct("Casa PC", Iva.IVA_13);
+    homePC = new CompositeProduct("Casa PC", Iva.IVA_SUM);
     homePC.addProduct(ram4gb);
     homePC.addProduct(disk500gb);
     homePC.addProduct(cpuAMD);
@@ -54,7 +54,7 @@ function main():void{
     homePC.addProduct(simpleMouse);
     
     //Paque compuesto de dos paquetes: paquete Gammer PC y Home PC           
-    pc2x1 = new CompositeProduct("Paquete PC Gammer + Casa", Iva.IVA_13)   
+    pc2x1 = new CompositeProduct("Paquete PC Gammer + Casa", Iva.IVA_SUM)   
     pc2x1.addProduct(gammerPC);
     pc2x1.addProduct(homePC);
 

@@ -18,7 +18,7 @@ export class SaleOrder{
     getPrice(): number {
         let price = 0;
         for (let product of this.products) {
-            price += product.getPrice() * product.getAmount();
+            price += product.getIva() * product.getAmount();
         }
         return price;
     }
@@ -65,6 +65,9 @@ export class SaleOrder{
                 return "13% IVA"
 
             } 
+            case Iva.IVA_SUM: {
+                return "Suma IVA"
+            }
             default: { 
                 return "Iva no especificado"
 

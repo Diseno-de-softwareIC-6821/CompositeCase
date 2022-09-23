@@ -36,7 +36,7 @@ export class CompositeProduct extends AbstractProduct{
 
     addProduct(product: AbstractProduct): void {
         
-        this.price += product.getPrice();
+        this.price += product.getIva();
 
         const productName = product.getName();
         if(this.searchProduct(productName)){
